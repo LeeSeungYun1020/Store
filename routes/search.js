@@ -1,17 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const mysql = require('../lib/mysql')
 
 router.get('/type', function(req, res, next) {
   res.render('type.ejs')
 })
 
 router.post('/type/:type/:attr', function(req, res, next) {
-  mysql.query(`SELECT * from ? where ? LIKE ?`,
-      [req.params.type, req.params.attr, "%" + req.body.text + "%"],
+  mysql.query(`SELECT * from ${req.params.type} where ${req.params.attr} LIKE ?`,
+      ["%" + req.body.text + "%"],
       function (error, results) {
+    console.log(error)
         return res.send({error: error, body: results})
       })
-  res.render('type.ejs')
 })
 
 router.get('/case', function(req, res, next) {

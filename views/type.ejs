@@ -29,6 +29,11 @@
         #type_search_result {
             margin-top: 16px;
         }
+
+        .mdc_data_table {
+            min-width: 400px;
+            width: 60%;
+        }
     </style>
     <script>
         let type = ""
@@ -96,16 +101,86 @@
                 }
                 else {
                     $.post(`/search/type/${type}/${attr}`, {text: contents}, (data) => {
-                        let result = ""
+                        let result = "" // console.log(data.body)
                         if (data.error){
-                            result += "<h2> 서버 오류로 검색 결과 출력에 실패하였습니다. </h2>"
+                            result = "<h2> 서버 오류로 검색 결과 출력에 실패하였습니다. </h2>"
                         } else if (data.body == undefined) {
-                            result += "<h2> 일치하는 검색 결과가 없습니다. </h2>" +
+                            result = "<h2> 일치하는 검색 결과가 없습니다. </h2>" +
                                 "<h2>다른 검색어를 시도해보세요.</h2>"
                         } else {
-                            console.log(data.body)
+                            result = `
+<div class="mdc-data-table" id="type_customer_table">
+    <div class="mdc-data-table__table-container">
+        <table class="mdc-data-table__table">
+            <thead>
+            <tr class="mdc-data-table__header-row">`
+                            if (type === "customer"){
+                                result += `
+                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">이름</th>
+                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">전화번호</th>
+                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">주소</th>
+                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">성별</th>
+                </tr>
+            </thead>
+            <tbody class="mdc-data-table__content">`
+                                for (const value of data.body) {
+                                    result += `
+        <tr class="mdc-data-table__row">
+          <th class="mdc-data-table__cell" scope="row">${value.name}</th>
+          <td class="mdc-data-table__cell">${value.phone}</td>
+          <td class="mdc-data-table__cell">${value.address}</td>
+          <td class="mdc-data-table__cell">${value.gender}</td>
+        </tr>
+                                    `.trimEnd()
+                                }
+                            } else if (type === "trade"){
+                                result += `
+                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">거래 번호</th>
+                <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">상품 ID</th>
+                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">가격</th>
+                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">날짜</th>
+                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">고객명</th>
+                </tr>
+            </thead>
+            <tbody class="mdc-data-table__content">`
+                                for (const value of data.body) {
+                                    result += `
+        <tr class="mdc-data-table__row">
+          <th class="mdc-data-table__cell" scope="row">${value.transactionNumber}</th>
+          <td class="mdc-data-table__cell mdc-data-table__cell--numeric">${value.productID}</td>
+          <td class="mdc-data-table__cell">${value.price}</td>
+          <td class="mdc-data-table__cell">${value.date}</td>
+          <td class="mdc-data-table__cell">${value.customerName}</td>
+        </tr>
+                                    `.trimEnd()
+                                }
+                            } else if (type === "product") {
+                                    result += `
+                <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">상품 ID</th>
+                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">상품명</th>
+                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">공급자</th>
+                </tr>
+            </thead>
+            <tbody class="mdc-data-table__content">`
+                                    for (const value of data.body) {
+                                        result += `
+        <tr class="mdc-data-table__row">
+          <th class="mdc-data-table__cell" scope="row">${value.productID}</th>
+          <td class="mdc-data-table__cell">${value.name}</td>
+          <td class="mdc-data-table__cell">${value.supplierName}</td>
+        </tr>
+                                    `.trimEnd()
+                                    }
+                            }
+                            result +=`
+            </tbody>
+        </table>
+    </div>
+</div>
+`.trimEnd()
                         }
                         $("#type_search_result").html(result)
+                        new mdc.dataTable.MDCDataTable(document.querySelector('.mdc-data-table'))
                     })
                 }
             })
@@ -381,6 +456,7 @@
             role="button" tabindex="0" id="type_search_icon">search
     </button>
 </div>
+    <br>
     <div id="type_search_result"></div>
 </div>
 <footer></footer>
