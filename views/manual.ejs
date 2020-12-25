@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>1. 데이터 입력</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
     <!--    jquery -->
     <script src="/node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <!--    material icons -->
@@ -13,18 +13,316 @@
     <script src="/node_modules/material-components-web/dist/material-components-web.min.js"></script>
 
     <script src="javascripts/main.js"></script>
+    <script>
+        $(document).ready(() => {
+            document.querySelectorAll('.mdc-radio').forEach(value => {
+                const radio = new mdc.radio.MDCRadio(value);
+                const formField = new mdc.formField.MDCFormField(document.querySelector('.mdc-form-field'));
+                formField.input = radio;
+            })
+            moveFooter()
+        })
 
+    </script>
     <style>
+        .button-wrap {
+            border-radius: 30px;
+            width: 280px;
+            margin: 35px auto;
+            padding: 5px 5px;
+        }
 
+        button {
+            --mdc-theme-primary: #4e342e;
+            --mdc-theme-background: white;
+        }
+
+        label {
+            --mdc-theme-primary: #4e342e;
+            --mdc-theme-background: white;
+            width: 350px;
+            margin: 8px auto;
+        }
+
+        .type_button {
+            border-radius: 30px;
+            width: 80px;
+            margin: 5px;
+        }
+
+        .text_floating_labels_main_color {
+            color: #4e342e !important;
+        }
+
+        form {
+            margin: 4px auto;
+            text-align: center;
+        }
     </style>
     <script>
+        $(document).ready(() => {
+            initButtons()
+        })
 
+        function initButtons() {
+            $('#input_customer_button').addClass('mdc-button--unelevated')
+            $('#input_trade_button').removeClass('mdc-button--unelevated')
+            $('#input_product_button').removeClass('mdc-button--unelevated')
+            $('#customer_section').show()
+            $('#trade_section').hide()
+            $('#product_section').hide()
+            $("#input_customer_button").click(() => {
+                $('#input_customer_button').addClass('mdc-button--unelevated')
+                $('#input_trade_button').removeClass('mdc-button--unelevated')
+                $('#input_product_button').removeClass('mdc-button--unelevated')
+                $('#customer_section').show()
+                $('#trade_section').hide()
+                $('#product_section').hide()
+            })
+            $("#input_trade_button").click(() => {
+                $('#input_customer_button').removeClass('mdc-button--unelevated')
+                $('#input_trade_button').addClass('mdc-button--unelevated')
+                $('#input_product_button').removeClass('mdc-button--unelevated')
+                $('#customer_section').hide()
+                $('#trade_section').show()
+                $('#product_section').hide()
+            })
+            $("#input_product_button").click(() => {
+                $('#input_customer_button').removeClass('mdc-button--unelevated')
+                $('#input_trade_button').removeClass('mdc-button--unelevated')
+                $('#input_product_button').addClass('mdc-button--unelevated')
+                $('#customer_section').hide()
+                $('#trade_section').hide()
+                $('#product_section').show()
+            })
+        }
     </script>
 </head>
 <body>
 <header></header>
 <div>
-
+    <div class="button-wrap mdc-elevation--z4">
+        <button class="mdc-button mdc-button--unelevated type_button" id="input_customer_button"
+                type="button">
+            <span class="mdc-button__ripple"></span>
+            고객
+        </button>
+        <button class="mdc-button mdc-button--unelevated type_button" id="input_trade_button"
+                type="button">
+            <span class="mdc-button__ripple"></span>
+            거래
+        </button>
+        <button class="mdc-button mdc-button--unelevated type_button" id="input_product_button"
+                type="button">
+            <span class="mdc-button__ripple"></span>
+            상품
+        </button>
+    </div>
+    <section id="customer_section">
+        <form action="input/customer" id="customer_form" method="post">
+            <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__notch">
+                            <span class="mdc-floating-label text_floating_labels_main_color">이름</span>
+                        </span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+                <input class="mdc-text-field__input" maxlength="32" name="name" type="text" required>
+                <div class="mdc-text-field-helper-line">
+                    <div class="mdc-text-field-character-counter">0 / 32</div>
+                </div>
+            </label>
+            <br>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__notch">
+                            <span class="mdc-floating-label text_floating_labels_main_color">전화번호</span>
+                        </span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+                <input class="mdc-text-field__input" maxlength="16" name="phone" type="tel" required>
+                <div class="mdc-text-field-helper-line">
+                    <div class="mdc-text-field-character-counter">0 / 16</div>
+                </div>
+            </label>
+            <br>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__notch">
+                            <span class="mdc-floating-label text_floating_labels_main_color">주소</span>
+                        </span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+                <input class="mdc-text-field__input" maxlength="32" name="address" type="text" required>
+                <div class="mdc-text-field-helper-line">
+                    <div class="mdc-text-field-character-counter">0 / 32</div>
+                </div>
+            </label>
+            <br>
+            <p class="one_line">성별</p>
+            <div class="mdc-form-field">
+                <div class="mdc-radio">
+                    <input class="mdc-radio__native-control" type="radio" id="customer_male" name="gender" checked>
+                    <div class="mdc-radio__background">
+                        <div class="mdc-radio__outer-circle"></div>
+                        <div class="mdc-radio__inner-circle"></div>
+                    </div>
+                    <div class="mdc-radio__ripple"></div>
+                </div>
+                <div for="customer_male">Male</div>
+            </div>
+            <div class="mdc-form-field">
+                <div class="mdc-radio">
+                    <input class="mdc-radio__native-control" type="radio" id="customer_female" name="gender">
+                    <div class="mdc-radio__background">
+                        <div class="mdc-radio__outer-circle"></div>
+                        <div class="mdc-radio__inner-circle"></div>
+                    </div>
+                    <div class="mdc-radio__ripple"></div>
+                </div>
+                <div for="customer_female">Female</div>
+            </div>
+            <br>
+            <button class="mdc-button" type="reset">
+                <span class="mdc-button__ripple"></span>
+                취소
+            </button>
+            <button class="mdc-button mdc-button--unelevated" type="submit">
+                <span class="mdc-button__ripple"></span>
+                추가
+            </button>
+        </form>
+    </section>
+    <section id="trade_section">
+        <form action="input/trade" id="trade_form" method="post">
+            <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__notch">
+                            <span class="mdc-floating-label text_floating_labels_main_color">거래 번호</span>
+                        </span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+                <input class="mdc-text-field__input" maxlength="16" name="transactionNumber" type="text" required>
+                <div class="mdc-text-field-helper-line">
+                    <div class="mdc-text-field-character-counter">0 / 16</div>
+                </div>
+            </label>
+            <br>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__notch">
+                            <span class="mdc-floating-label text_floating_labels_main_color">상품 ID</span>
+                        </span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+                <input class="mdc-text-field__input" name="productID" type="number" required>
+            </label>
+            <br>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__notch">
+                            <span class="mdc-floating-label text_floating_labels_main_color">가격</span>
+                        </span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+                <input class="mdc-text-field__input" maxlength="16" name="price" type="text" required>
+                <div class="mdc-text-field-helper-line">
+                    <div class="mdc-text-field-character-counter">0 / 16</div>
+                </div>
+            </label>
+            <br>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__notch">
+                            <span class="mdc-floating-label text_floating_labels_main_color">거래일</span>
+                        </span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+                <input class="mdc-text-field__input" maxlength="32" name="date" type="date" required>
+            </label>
+            <br>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__notch">
+                            <span class="mdc-floating-label text_floating_labels_main_color">고객 이름</span>
+                        </span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+                <input class="mdc-text-field__input" maxlength="32" name="customerName" type="name" required>
+                <div class="mdc-text-field-helper-line">
+                    <div class="mdc-text-field-character-counter">0 / 32</div>
+                </div>
+            </label>
+            <br>
+            <button class="mdc-button" type="reset">
+                <span class="mdc-button__ripple"></span>
+                취소
+            </button>
+            <button class="mdc-button mdc-button--unelevated" type="submit">
+                <span class="mdc-button__ripple"></span>
+                추가
+            </button>
+        </form>
+    </section>
+    <section id="product_section">
+        <form action="input/product" id="product_form" method="post">
+            <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__notch">
+                            <span class="mdc-floating-label text_floating_labels_main_color">상품 ID</span>
+                        </span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+                <input class="mdc-text-field__input" name="productID" type="number" required>
+            </label>
+            <br>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__notch">
+                            <span class="mdc-floating-label text_floating_labels_main_color">상품명</span>
+                        </span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+                <input class="mdc-text-field__input" maxlength="32" name="name" type="text" required>
+                <div class="mdc-text-field-helper-line">
+                    <div class="mdc-text-field-character-counter">0 / 32</div>
+                </div>
+            </label>
+            <br>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__notch">
+                            <span class="mdc-floating-label text_floating_labels_main_color">공급자</span>
+                        </span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+                <input class="mdc-text-field__input" maxlength="32" name="supplierName" type="name" required>
+                <div class="mdc-text-field-helper-line">
+                    <div class="mdc-text-field-character-counter">0 / 32</div>
+                </div>
+            </label>
+            <br>
+            <button class="mdc-button" type="reset">
+                <span class="mdc-button__ripple"></span>
+                취소
+            </button>
+            <button class="mdc-button mdc-button--unelevated" type="submit">
+                <span class="mdc-button__ripple"></span>
+                추가
+            </button>
+        </form>
+    </section>
 </div>
 <footer></footer>
 </body>

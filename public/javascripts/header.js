@@ -14,6 +14,4 @@ function initComponents() {
         let br = new mdc.ripple.MDCRipple(value)
         br.unbounded = true;
     })
-    const tabBar = new mdc.tab-bar.MDCTabBar(document.querySelector('.mdc-tab-bar'));
-    tabBar.getFocusedTabIndex()
 }

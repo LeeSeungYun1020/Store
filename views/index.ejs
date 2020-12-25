@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title><%= title %></title>
+  <title>DB - Home</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <!--    jquery -->
   <script src="/node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
@@ -29,6 +29,14 @@
       })
       $("#Q4_button").click(() => {
         location.href = "/search/case"
+      })
+
+      $("#tabBar").on("activated", (event) => {
+        console.log(event.detail.index)
+      })
+      document.querySelectorAll('.mdc-tab-bar').forEach(value => {
+        let tabBar = new mdc.tabBar.MDCTabBar(value)
+        tabBar.activateTab(0)
       })
     })
 
