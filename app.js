@@ -1,26 +1,41 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser')
+const logger = require('morgan');
+const mysql = require('./lib/mysql.js')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const inputRouter = require('./routes/input');
+const searchRouter = require('./routes/search');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile)
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')))
+app.use(express.static(path.join(__dirname, 'node_modules')))
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/input', inputRouter);
+app.use('/search', searchRouter);
+app.get('/*.html', (req, res) => {
+  res.render(req.params[0] + '.html')
+})
+app.get('/*.ejs', (req, res) => {
+  res.render(req.params[0] + '.ejs')
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,10 @@
+.mdc-button {
+    --mdc-theme-primary: #4e342e;
+    --mdc-theme-background: white;
+    width: 300px;
+}
+
+.main_section {
+    text-align: center;
+    margin-top: 16px;
+}

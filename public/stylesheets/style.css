@@ -1,8 +1,19 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+* {
+  margin: 0;
+}
+
+.one_line {
+  display: inline-flex;
+}
+
+.fill_box {
+  display: flex;
+}
+
+.fill_left {
+  flex: 1 auto !important;
 }
