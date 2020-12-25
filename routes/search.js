@@ -10,13 +10,25 @@ router.post('/type/:type/:attr', function(req, res, next) {
   mysql.query(`SELECT * from ${req.params.type} where ${req.params.attr} LIKE ?`,
       ["%" + req.body.text + "%"],
       function (error, results) {
-    console.log(error)
+        console.log(error)
         return res.send({error: error, body: results})
       })
 })
 
-router.get('/case', function(req, res, next) {
+router.get('/case', function (req, res, next) {
   res.render('case.ejs')
+})
+
+router.post('/case/1', function (req, res, next) {
+  res.send({error: error, body: results})
+})
+
+router.post('/case/2', function (req, res, next) {
+  res.send({error: error, body: results})
+})
+
+router.post('/case/3', function (req, res, next) {
+  res.send({error: error, body: results})
 })
 
 // 라이브러리 파일 요청

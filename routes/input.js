@@ -1,15 +1,27 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/manual', function(req, res, next) {
+router.get('/manual', function (req, res, next) {
   res.render('manual.ejs')
 })
 
-router.get('/file', function(req, res, next) {
+router.post('/customer', function (req, res, next) {
+  res.redirect('manual.ejs')
+})
+
+router.post('/trade', function (req, res, next) {
+  res.redirect('manual.ejs')
+})
+
+router.post('/product', function (req, res, next) {
+  res.redirect('manual.ejs')
+})
+
+router.get('/file', function (req, res, next) {
   res.render('file.ejs')
 })
 
-router.post('/file', function(req, res, next) {
+router.post('/file', function (req, res, next) {
   console.log(req.files)
   console.log(req.file)
   res.send(req.files)
