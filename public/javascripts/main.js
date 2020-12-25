@@ -2,7 +2,6 @@ let isReady = false;
 $(document).ready(() => {
     if (!isReady) {
         isReady = true
-        $('header').load('header.ejs')
         $('footer').load('footer.ejs')
     }
     moveFooter()
