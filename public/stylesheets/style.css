@@ -17,3 +17,19 @@ body {
 .fill_left {
   flex: 1 auto !important;
 }
+
+.text_floating_labels_main_color {
+  color: #4e342e !important;
+}
+
+.mdc-button {
+  --mdc-theme-primary: #4e342e;
+  --mdc-theme-background: white;
+}
+
+.mdc-text-field {
+  --mdc-theme-primary: #4e342e;
+  --mdc-theme-background: white;
+  width: 350px;
+  margin: 8px auto;
+}

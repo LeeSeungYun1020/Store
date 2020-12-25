@@ -13,17 +13,6 @@
     <script src="/node_modules/material-components-web/dist/material-components-web.min.js"></script>
 
     <script src="javascripts/main.js"></script>
-    <script>
-        $(document).ready(() => {
-            document.querySelectorAll('.mdc-radio').forEach(value => {
-                const radio = new mdc.radio.MDCRadio(value);
-                const formField = new mdc.formField.MDCFormField(document.querySelector('.mdc-form-field'));
-                formField.input = radio;
-            })
-            moveFooter()
-        })
-
-    </script>
     <style>
         .button-wrap {
             border-radius: 30px;
@@ -32,26 +21,10 @@
             padding: 5px 5px;
         }
 
-        button {
-            --mdc-theme-primary: #4e342e;
-            --mdc-theme-background: white;
-        }
-
-        label {
-            --mdc-theme-primary: #4e342e;
-            --mdc-theme-background: white;
-            width: 350px;
-            margin: 8px auto;
-        }
-
         .type_button {
             border-radius: 30px;
             width: 80px;
             margin: 5px;
-        }
-
-        .text_floating_labels_main_color {
-            color: #4e342e !important;
         }
 
         form {
@@ -61,6 +34,12 @@
     </style>
     <script>
         $(document).ready(() => {
+            document.querySelectorAll('.mdc-radio').forEach(value => {
+                const radio = new mdc.radio.MDCRadio(value);
+                const formField = new mdc.formField.MDCFormField(document.querySelector('.mdc-form-field'));
+                formField.input = radio;
+            })
+            moveFooter()
             initButtons()
         })
 

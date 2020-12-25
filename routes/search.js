@@ -5,6 +5,15 @@ router.get('/type', function(req, res, next) {
   res.render('type.ejs')
 })
 
+router.post('/type/:type/:attr', function(req, res, next) {
+  mysql.query(`SELECT * from ? where ? LIKE ?`,
+      [req.params.type, req.params.attr, "%" + req.body.text + "%"],
+      function (error, results) {
+        return res.send({error: error, body: results})
+      })
+  res.render('type.ejs')
+})
+
 router.get('/case', function(req, res, next) {
   res.render('case.ejs')
 })
