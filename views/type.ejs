@@ -26,14 +26,11 @@
             text-align: center;
         }
 
-        #type_search_result {
-            margin-top: 16px;
-        }
-
-        .mdc_data_table {
+        #type_result_table {
             min-width: 400px;
             width: 60%;
         }
+
     </style>
     <script>
         let type = ""
@@ -94,27 +91,26 @@
 
             $("#type_search_icon").click(() => {
                 let contents = $("#type_search_box_input").val()
-                if (type === "" || attr === ""){
+                if (type === "" || attr === "") {
                     alert("검색할 항목과 속성을 선택해야합니다.")
-                } else if (contents === ""){
+                } else if (contents === "") {
                     alert("검색할 내용을 입력해야합니다.")
-                }
-                else {
+                } else {
                     $.post(`/search/type/${type}/${attr}`, {text: contents}, (data) => {
                         let result = "" // console.log(data.body)
-                        if (data.error){
+                        if (data.error) {
                             result = "<h2> 서버 오류로 검색 결과 출력에 실패하였습니다. </h2>"
-                        } else if (data.body == undefined) {
+                        } else if (data.body == undefined || data.body.length === 0) {
                             result = "<h2> 일치하는 검색 결과가 없습니다. </h2>" +
                                 "<h2>다른 검색어를 시도해보세요.</h2>"
                         } else {
                             result = `
-<div class="mdc-data-table" id="type_customer_table">
+<div class="mdc-data-table" id="type_result_table">
     <div class="mdc-data-table__table-container">
         <table class="mdc-data-table__table">
             <thead>
             <tr class="mdc-data-table__header-row">`
-                            if (type === "customer"){
+                            if (type === "customer") {
                                 result += `
                 <th class="mdc-data-table__header-cell" role="columnheader" scope="col">이름</th>
                 <th class="mdc-data-table__header-cell" role="columnheader" scope="col">전화번호</th>

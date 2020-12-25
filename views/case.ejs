@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>4. 특수 검색</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
     <!--    jquery -->
     <script src="/node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <!--    material icons -->
@@ -15,15 +15,116 @@
     <script src="javascripts/main.js"></script>
 
     <style>
+        .main_contents {
+            margin: 16px;
+        }
 
+        .mdc-text-field {
+            width: 200px;
+            height: 50px;
+            margin: 8px auto;
+        }
+
+        .result {
+            margin-top: 8px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            margin-top: 16px;
+            margin-bottom: 8px;
+        }
     </style>
     <script>
+        $(document).ready(() => {
+            $("#case1_button").click(() => {
+                $.post(`/search/case/1`, (data) => {
 
+                })
+            })
+
+            $("#case2_button").click(() => {
+                let date = $("#case2_date").val()
+                let count = $("#case2_count").val()
+                console.log(count)
+                if (date == "" || count == "") {
+                    alert("조회를 위해 날짜와 개수를 입력하십시오.")
+                } else {
+                    $.post(`/search/case/2`, {date: date, count: count}, (data) => {
+
+                    })
+                }
+            })
+
+            $("#case3_button").click(() => {
+                let count = $("#case3_count").val()
+                console.log(count)
+                if (count == "") {
+                    alert("조회를 위해 횟수를 입력하십시오.")
+                } else {
+                    $.post(`/search/case/3`, {count: $("#case3_count").val()}, (data) => {
+
+                    })
+                }
+            })
+        })
     </script>
 </head>
 <body>
 <header></header>
-<div>
+<div class="main_contents">
+    <h1>남자보다 여자가 더 많이 산 상품의 이름</h1>
+    <button class="mdc-button mdc-button--unelevated" id="case1_button">
+        <span class="mdc-button__ripple"></span>
+        조회
+    </button>
+    <div class="result" id="case1_result"></div>
+
+    <h1>주어진 날 이전에 가장 많은 액수의 거래가 이루어진 K가지 상품</h1>
+    <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__notch">
+                            <span class="mdc-floating-label text_floating_labels_main_color">날짜 선택</span>
+                        </span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+        <input class="mdc-text-field__input" id="case2_date" maxlength="32" name="date" type="date" required>
+    </label>
+    <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__notch">
+                            <span class="mdc-floating-label text_floating_labels_main_color">개수(K)</span>
+                        </span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+        <input class="mdc-text-field__input" id="case2_count" name="count" type="number" required>
+    </label>
+    <button class="mdc-button mdc-button--unelevated" id="case2_button">
+        <span class="mdc-button__ripple"></span>
+        조회
+    </button>
+
+    <div class="result" id="case2_result"></div>
+
+    <h1>하나의 공급처에서 m번 이상의 제품을 산 고객의 이름</h1>
+    <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline">
+                        <span class="mdc-notched-outline__leading"></span>
+                        <span class="mdc-notched-outline__notch">
+                            <span class="mdc-floating-label text_floating_labels_main_color">횟수(M)</span>
+                        </span>
+                        <span class="mdc-notched-outline__trailing"></span>
+                    </span>
+        <input class="mdc-text-field__input" id="case3_count" name="count" type="number" required>
+    </label>
+    <button class="mdc-button mdc-button--unelevated" id="case3_button">
+        <span class="mdc-button__ripple"></span>
+        조회
+    </button>
+
+    <div class="result" id="case3_result"></div>
 </div>
 <footer></footer>
 </body>
