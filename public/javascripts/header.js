@@ -2,9 +2,10 @@ let tabBar
 
 $(document).ready(() => {
     initComponents()
-    $(".header_title").click(() => {
-        location.href = "/"
+    $(".title_logo").click(() => {
+        $("#tab_home").trigger("click")
     })
+
     clickTabs()
 })
 
@@ -27,6 +28,11 @@ function initComponents() {
 }
 
 function clickTabs() {
+
+    $("#tab_home").click(() => {
+        tabBar.activateTab(0)
+        location.href = "/"
+    })
     $("#tab_input_manual").click(() => {
         tabBar.activateTab(1)
         location.href = "/input/manual"

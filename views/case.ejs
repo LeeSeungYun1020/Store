@@ -18,7 +18,13 @@
 
     <style>
         .main_contents {
-            margin: 16px;
+            text-align: left;
+            width: 70%;
+            margin: 16px 16px 16px 15%;
+        }
+
+        .question {
+            text-align: right;
         }
 
         .mdc-text-field {
@@ -71,6 +77,22 @@
                     })
                 }
             })
+            if ($(window).width() < 800)
+                $(".main_contents").css({width: "100%", marginLeft: "16px"})
+            else if ($(window).width() < 1200)
+                $(".main_contents").css({width: "80%", marginLeft: "10%"})
+            else
+                $(".main_contents").css({width: "60%", marginLeft: "20%"})
+
+            $(window).resize(() => {
+                console.log($(window).width())
+                if ($(window).width() < 800)
+                    $(".main_contents").css({width: "100%", marginLeft: "16px"})
+                else if ($(window).width() < 1200)
+                    $(".main_contents").css({width: "80%", marginLeft: "10%"})
+                else
+                    $(".main_contents").css({width: "60%", marginLeft: "20%"})
+            })
         })
     </script>
 </head>
@@ -78,8 +100,8 @@
 <header>
     <div class="mdc-elevation--z6" id="main_header">
         <div class="header_title">
-            <h1>DB Assignment2</h1>
-            <h3>201645825 이승윤</h3>
+            <h1 class="title_logo">DB Assignment2</h1>
+            <h3 class="title_logo">201645825 이승윤</h3>
         </div>
         <div class="mdc-tab-bar" role="tablist">
             <div class="mdc-tab-scroller">
@@ -143,14 +165,17 @@
 </header>
 <div class="main_contents">
     <h1>남자보다 여자가 더 많이 산 상품의 이름</h1>
-    <button class="mdc-button mdc-button--unelevated" id="case1_button">
-        <span class="mdc-button__ripple"></span>
-        조회
-    </button>
+    <div class="question">
+        <button class="mdc-button mdc-button--unelevated" id="case1_button">
+            <span class="mdc-button__ripple"></span>
+            조회
+        </button>
+    </div>
     <div class="result" id="case1_result"></div>
 
     <h1>주어진 날 이전에 가장 많은 액수의 거래가 이루어진 K가지 상품</h1>
-    <label class="mdc-text-field mdc-text-field--outlined">
+    <div class="question">
+        <label class="mdc-text-field mdc-text-field--outlined">
                     <span class="mdc-notched-outline">
                         <span class="mdc-notched-outline__leading"></span>
                         <span class="mdc-notched-outline__notch">
@@ -158,9 +183,9 @@
                         </span>
                         <span class="mdc-notched-outline__trailing"></span>
                     </span>
-        <input class="mdc-text-field__input" id="case2_date" maxlength="32" name="date" type="date" required>
-    </label>
-    <label class="mdc-text-field mdc-text-field--outlined">
+            <input class="mdc-text-field__input" id="case2_date" maxlength="32" name="date" type="date" required>
+        </label>
+        <label class="mdc-text-field mdc-text-field--outlined">
                     <span class="mdc-notched-outline">
                         <span class="mdc-notched-outline__leading"></span>
                         <span class="mdc-notched-outline__notch">
@@ -168,17 +193,18 @@
                         </span>
                         <span class="mdc-notched-outline__trailing"></span>
                     </span>
-        <input class="mdc-text-field__input" id="case2_count" name="count" type="number" required>
-    </label>
-    <button class="mdc-button mdc-button--unelevated" id="case2_button">
-        <span class="mdc-button__ripple"></span>
-        조회
-    </button>
-
+            <input class="mdc-text-field__input" id="case2_count" name="count" type="number" required>
+        </label>
+        <button class="mdc-button mdc-button--unelevated" id="case2_button">
+            <span class="mdc-button__ripple"></span>
+            조회
+        </button>
+    </div>
     <div class="result" id="case2_result"></div>
 
     <h1>하나의 공급처에서 m번 이상의 제품을 산 고객의 이름</h1>
-    <label class="mdc-text-field mdc-text-field--outlined">
+    <div class="question">
+        <label class="mdc-text-field mdc-text-field--outlined">
                     <span class="mdc-notched-outline">
                         <span class="mdc-notched-outline__leading"></span>
                         <span class="mdc-notched-outline__notch">
@@ -186,13 +212,13 @@
                         </span>
                         <span class="mdc-notched-outline__trailing"></span>
                     </span>
-        <input class="mdc-text-field__input" id="case3_count" name="count" type="number" required>
-    </label>
-    <button class="mdc-button mdc-button--unelevated" id="case3_button">
-        <span class="mdc-button__ripple"></span>
-        조회
-    </button>
-
+            <input class="mdc-text-field__input" id="case3_count" name="count" type="number" required>
+        </label>
+        <button class="mdc-button mdc-button--unelevated" id="case3_button">
+            <span class="mdc-button__ripple"></span>
+            조회
+        </button>
+    </div>
     <div class="result" id="case3_result"></div>
 </div>
 <footer></footer>
