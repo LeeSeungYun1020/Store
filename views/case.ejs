@@ -61,7 +61,20 @@
                     if (data.error) {
                         alert("해당되는 값이 없습니다.")
                     }
-
+                    let text = `<div class="mdc-chip-set" role="grid">`
+                    for (const d of data.body) {
+                        text += `
+  <div class="mdc-chip" role="row">
+    <div class="mdc-chip__ripple"></div>
+    <span role="gridcell">
+      <span role="button" tabindex="0" class="mdc-chip__primary-action">
+        <span class="mdc-chip__text">${d.name}</span>
+      </span>
+    </span>
+  </div>`
+                    }
+                    text += "</div>"
+                    $("#case1_result").html(text)
                 })
             })
 
