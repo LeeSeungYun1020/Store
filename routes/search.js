@@ -24,11 +24,32 @@ router.post('/case/1', function (req, res, next) {
 })
 
 router.post('/case/2', function (req, res, next) {
-  res.send({error: error, body: results})
+    mysql.query(`
+                select Product.*
+                from Trade, Product
+                where Product.productID = Trade.productID and date(date) < date(?)
+                group by Product.productID
+                order by sum(price) desc
+                limit ${req.body.count}`.trim(),
+        [req.body.date],
+        function (error, results) {
+            console.log(error)
+            return res.send({error: error, body: results})
+        })
 })
 
 router.post('/case/3', function (req, res, next) {
-  res.send({error: error, body: results})
+    mysql.query(`
+                select Customer.name
+                from Customer, Trade, Product
+                where Customer.name = Trade.customerName and Trade.productID = Product.productID
+                group by customerName
+                having count(transactionNumber) >= ?`.trim(),
+        [req.body.count],
+        function (error, results) {
+            console.log(error)
+            return res.send({error: error, body: results})
+        })
 })
 
 // 라이브러리 파일 요청
