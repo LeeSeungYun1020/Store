@@ -32,10 +32,20 @@
             min-width: 60%;
         }
 
+        #option_list {
+            margin-left: 8px;
+        }
+
+        #type_list {
+            margin-right: 8px;
+        }
+
+
     </style>
     <script>
         let type = ""
         let attr = ""
+        let opt = "include"
         $(document).ready(() => {
             tabBar.activateTab(3)
 
@@ -44,21 +54,22 @@
             $("#product_list").hide()
             $("#trade_list").hide()
 
-            const selectType = new mdc.select.MDCSelect(document.querySelector('.type'));
+            const selectType = new mdc.select.MDCSelect(document.querySelector('#type_list'));
             new mdc.select.MDCSelect(document.querySelector('#empty_list'));
             const attrC = new mdc.select.MDCSelect(document.querySelector('#customer_list'));
             const attrT = new mdc.select.MDCSelect(document.querySelector('#trade_list'));
             const attrP = new mdc.select.MDCSelect(document.querySelector('#product_list'));
+
             selectType.listen('MDCSelect:change', () => {
                 type = selectType.value
                 attr = ""
-                if (type === "customer"){
+                if (type === "customer") {
                     attrC.selectedIndex = 0
                     $("#customer_list").show()
                     $("#empty_list").hide()
                     $("#product_list").hide()
                     $("#trade_list").hide()
-                } else if (type === "trade"){
+                } else if (type === "trade") {
                     attrT.selectedIndex = 0
                     $("#customer_list").hide()
                     $("#empty_list").hide()
@@ -99,7 +110,7 @@
                 } else if (contents === "") {
                     alert("검색할 내용을 입력해야합니다.")
                 } else {
-                    $.post(`/search/type/${type}/${attr}`, {text: contents}, (data) => {
+                    $.post(`/search/type/${type}/${attr}`, {text: contents, option: opt}, (data) => {
                         let result = "" // console.log(data.body)
                         if (data.error) {
                             result = "<h2> 서버 오류로 검색 결과 출력에 실패하였습니다. </h2>"
@@ -132,7 +143,7 @@
         </tr>
                                     `.trimEnd()
                                 }
-                            } else if (type === "trade"){
+                            } else if (type === "trade") {
                                 result += `
                 <th class="mdc-data-table__header-cell" role="columnheader" scope="col">거래 번호</th>
                 <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">상품 ID</th>
@@ -161,17 +172,17 @@
                 </tr>
             </thead>
             <tbody class="mdc-data-table__content">`
-                                    for (const value of data.body) {
-                                        result += `
+                                for (const value of data.body) {
+                                    result += `
         <tr class="mdc-data-table__row">
           <th class="mdc-data-table__cell" scope="row">${value.productID}</th>
           <td class="mdc-data-table__cell">${value.name}</td>
           <td class="mdc-data-table__cell">${value.supplierName}</td>
         </tr>
                                     `.trimEnd()
-                                    }
+                                }
                             }
-                            result +=`
+                            result += `
             </tbody>
         </table>
     </div>
@@ -182,6 +193,11 @@
                         new mdc.dataTable.MDCDataTable(document.querySelector('.mdc-data-table'))
                     })
                 }
+            })
+
+            const option = new mdc.select.MDCSelect(document.querySelector('#option_list'));
+            option.listen('MDCSelect:change', () => {
+                opt = option.value
             })
         })
     </script>
@@ -255,15 +271,15 @@
 </header>
 <div class="main_contents">
     <div>
-        <div class="mdc-select mdc-select--filled mdc-elevation--z4 type">
+        <div class="mdc-select mdc-select--filled mdc-elevation--z4" id="type_list">
             <div class="mdc-select__anchor"
                  role="button">
                 <span class="mdc-select__ripple"></span>
                 <span id="type-label" class="mdc-floating-label">Type</span>
                 <span class="mdc-select__selected-text-container">
-      <span id="type-selected-text" class="mdc-select__selected-text"></span>
-    </span>
-            <span class="mdc-select__dropdown-icon">
+                <span id="type-selected-text" class="mdc-select__selected-text"></span>
+                </span>
+                <span class="mdc-select__dropdown-icon">
       <svg
               class="mdc-select__dropdown-icon-graphic"
               viewBox="7 10 10 5" focusable="false">
@@ -281,45 +297,45 @@
         </polygon>
       </svg>
     </span>
-            <span class="mdc-line-ripple"></span>
-        </div>
+                <span class="mdc-line-ripple"></span>
+            </div>
 
-        <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
-            <ul class="mdc-list" role="listbox">
-                <li class="mdc-list-item mdc-list-item--selected" data-value="" role="option">
-                    <span class="mdc-list-item__ripple"></span>
-                </li>
-                <li class="mdc-list-item" data-value="customer" role="option">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">
+            <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
+                <ul class="mdc-list" role="listbox">
+                    <li class="mdc-list-item mdc-list-item--selected" data-value="" role="option">
+                        <span class="mdc-list-item__ripple"></span>
+                    </li>
+                    <li class="mdc-list-item" data-value="customer" role="option">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">
           Customer
         </span>
-                </li>
-                <li class="mdc-list-item" data-value="trade" role="option">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">
+                    </li>
+                    <li class="mdc-list-item" data-value="trade" role="option">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">
           Trade
         </span>
-                </li>
-                <li class="mdc-list-item" data-value="product" role="option">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">
+                    </li>
+                    <li class="mdc-list-item" data-value="product" role="option">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">
           Product
         </span>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
 
-    <div class="mdc-select mdc-select--filled mdc-elevation--z4" id="empty_list">
-        <div class="mdc-select__anchor"
-             role="button">
-            <span class="mdc-select__ripple"></span>
-            <span id="attribute-label" class="mdc-floating-label">Attribute</span>
-            <span class="mdc-select__selected-text-container">
+        <div class="mdc-select mdc-select--filled mdc-elevation--z4" id="empty_list">
+            <div class="mdc-select__anchor"
+                 role="button">
+                <span class="mdc-select__ripple"></span>
+                <span id="attribute-label" class="mdc-floating-label">Attribute</span>
+                <span class="mdc-select__selected-text-container">
       <span id="attribute-selected-text" class="mdc-select__selected-text"></span>
     </span>
-            <span class="mdc-select__dropdown-icon">
+                <span class="mdc-select__dropdown-icon">
       <svg
               class="mdc-select__dropdown-icon-graphic"
               viewBox="7 10 10 5" focusable="false">
@@ -337,27 +353,27 @@
         </polygon>
       </svg>
     </span>
-            <span class="mdc-line-ripple"></span>
+                <span class="mdc-line-ripple"></span>
+            </div>
+
+            <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
+                <ul class="mdc-list" role="listbox">
+                    <li class="mdc-list-item mdc-list-item--selected" data-value="" role="option" tabindex="0">
+                        <span class="mdc-list-item__ripple"></span>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
-            <ul class="mdc-list" role="listbox">
-                <li class="mdc-list-item mdc-list-item--selected" data-value="" role="option" tabindex="0">
-                    <span class="mdc-list-item__ripple"></span>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="mdc-select mdc-select--filled attribute mdc-elevation--z4" id="customer_list">
-        <div class="mdc-select__anchor"
-             role="button">
-            <span class="mdc-select__ripple"></span>
-            <span class="mdc-floating-label">Attribute</span>
-            <span class="mdc-select__selected-text-container">
+        <div class="mdc-select mdc-select--filled attribute mdc-elevation--z4" id="customer_list">
+            <div class="mdc-select__anchor"
+                 role="button">
+                <span class="mdc-select__ripple"></span>
+                <span class="mdc-floating-label">Attribute</span>
+                <span class="mdc-select__selected-text-container">
       <span class="mdc-select__selected-text"></span>
     </span>
-            <span class="mdc-select__dropdown-icon">
+                <span class="mdc-select__dropdown-icon">
       <svg
               class="mdc-select__dropdown-icon-graphic"
               viewBox="7 10 10 5" focusable="false">
@@ -375,43 +391,43 @@
         </polygon>
       </svg>
     </span>
-            <span class="mdc-line-ripple"></span>
+                <span class="mdc-line-ripple"></span>
+            </div>
+
+            <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
+                <ul class="mdc-list" role="listbox">
+                    <li class="mdc-list-item mdc-list-item--selected" data-value="" role="option" tabindex="0">
+                        <span class="mdc-list-item__ripple"></span>
+                    </li>
+                    <li class="mdc-list-item" data-value="name" role="option" tabindex="1">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">name</span>
+                    </li>
+                    <li class="mdc-list-item" data-value="phone" role="option" tabindex="2">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">phone</span>
+                    </li>
+                    <li class="mdc-list-item" data-value="address" role="option" tabindex="3">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">address</span>
+                    </li>
+                    <li class="mdc-list-item" data-value="gender" role="option" tabindex="4">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">gender</span>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
-            <ul class="mdc-list" role="listbox">
-                <li class="mdc-list-item mdc-list-item--selected" data-value="" role="option" tabindex="0">
-                    <span class="mdc-list-item__ripple"></span>
-                </li>
-                <li class="mdc-list-item" data-value="name" role="option" tabindex="1">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">name</span>
-                </li>
-                <li class="mdc-list-item" data-value="phone" role="option" tabindex="2">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">phone</span>
-                </li>
-                <li class="mdc-list-item" data-value="address" role="option" tabindex="3">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">address</span>
-                </li>
-                <li class="mdc-list-item" data-value="gender" role="option" tabindex="4">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">gender</span>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="mdc-select mdc-select--filled attribute mdc-elevation--z4" id="trade_list">
-        <div class="mdc-select__anchor"
-             role="button">
-            <span class="mdc-select__ripple"></span>
-            <span class="mdc-floating-label">Attribute</span>
-            <span class="mdc-select__selected-text-container">
+        <div class="mdc-select mdc-select--filled attribute mdc-elevation--z4" id="trade_list">
+            <div class="mdc-select__anchor"
+                 role="button">
+                <span class="mdc-select__ripple"></span>
+                <span class="mdc-floating-label">Attribute</span>
+                <span class="mdc-select__selected-text-container">
       <span class="mdc-select__selected-text"></span>
     </span>
-            <span class="mdc-select__dropdown-icon">
+                <span class="mdc-select__dropdown-icon">
       <svg
               class="mdc-select__dropdown-icon-graphic"
               viewBox="7 10 10 5" focusable="false">
@@ -429,47 +445,47 @@
         </polygon>
       </svg>
     </span>
-            <span class="mdc-line-ripple"></span>
+                <span class="mdc-line-ripple"></span>
+            </div>
+
+            <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
+                <ul class="mdc-list" role="listbox">
+                    <li class="mdc-list-item mdc-list-item--selected" data-value="" role="option" tabindex="0">
+                        <span class="mdc-list-item__ripple"></span>
+                    </li>
+                    <li class="mdc-list-item" data-value="transactionNumber" role="option" tabindex="1">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">transactionNumber</span>
+                    </li>
+                    <li class="mdc-list-item" data-value="productID" role="option" tabindex="2">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">productID</span>
+                    </li>
+                    <li class="mdc-list-item" data-value="price" role="option" tabindex="3">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">price</span>
+                    </li>
+                    <li class="mdc-list-item" data-value="date" role="option" tabindex="4">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">date</span>
+                    </li>
+                    <li class="mdc-list-item" data-value="customerName" role="option" tabindex="5">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">customerName</span>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
-            <ul class="mdc-list" role="listbox">
-                <li class="mdc-list-item mdc-list-item--selected" data-value="" role="option" tabindex="0">
-                    <span class="mdc-list-item__ripple"></span>
-                </li>
-                <li class="mdc-list-item" data-value="transactionNumber" role="option" tabindex="1">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">transactionNumber</span>
-                </li>
-                <li class="mdc-list-item" data-value="productID" role="option" tabindex="2">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">productID</span>
-                </li>
-                <li class="mdc-list-item" data-value="price" role="option" tabindex="3">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">price</span>
-                </li>
-                <li class="mdc-list-item" data-value="date" role="option" tabindex="4">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">date</span>
-                </li>
-                <li class="mdc-list-item" data-value="customerName" role="option" tabindex="5">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">customerName</span>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="mdc-select mdc-select--filled attribute mdc-elevation--z4" id="product_list">
-        <div class="mdc-select__anchor"
-             role="button">
-            <span class="mdc-select__ripple"></span>
-            <span class="mdc-floating-label">Attribute</span>
-            <span class="mdc-select__selected-text-container">
+        <div class="mdc-select mdc-select--filled attribute mdc-elevation--z4" id="product_list">
+            <div class="mdc-select__anchor"
+                 role="button">
+                <span class="mdc-select__ripple"></span>
+                <span class="mdc-floating-label">Attribute</span>
+                <span class="mdc-select__selected-text-container">
       <span class="mdc-select__selected-text"></span>
     </span>
-            <span class="mdc-select__dropdown-icon">
+                <span class="mdc-select__dropdown-icon">
       <svg
               class="mdc-select__dropdown-icon-graphic"
               viewBox="7 10 10 5" focusable="false">
@@ -487,39 +503,81 @@
         </polygon>
       </svg>
     </span>
-            <span class="mdc-line-ripple"></span>
-        </div>
+                <span class="mdc-line-ripple"></span>
+            </div>
 
-        <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
-            <ul class="mdc-list" role="listbox">
-                <li class="mdc-list-item mdc-list-item--selected" data-value="" role="option" tabindex="0">
-                    <span class="mdc-list-item__ripple"></span>
-                </li>
-                <li class="mdc-list-item" data-value="name" role="option" tabindex="1">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">name</span>
-                </li>
-                <li class="mdc-list-item" data-value="productID" role="option" tabindex="2">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">productID</span>
-                </li>
-                <li class="mdc-list-item" data-value="supplierName" role="option" tabindex="3">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">supplierName</span>
-                </li>
-            </ul>
+            <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
+                <ul class="mdc-list" role="listbox">
+                    <li class="mdc-list-item mdc-list-item--selected" data-value="" role="option" tabindex="0">
+                        <span class="mdc-list-item__ripple"></span>
+                    </li>
+                    <li class="mdc-list-item" data-value="name" role="option" tabindex="1">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">name</span>
+                    </li>
+                    <li class="mdc-list-item" data-value="productID" role="option" tabindex="2">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">productID</span>
+                    </li>
+                    <li class="mdc-list-item" data-value="supplierName" role="option" tabindex="3">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">supplierName</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mdc-select mdc-select--filled mdc-elevation--z4 type" id="option_list">
+            <div class="mdc-select__anchor"
+                 role="button">
+                <span class="mdc-select__ripple"></span>
+                <span class="mdc-floating-label">Option</span>
+                <span class="mdc-select__selected-text-container">
+      <span class="mdc-select__selected-text"></span>
+    </span>
+                <span class="mdc-select__dropdown-icon">
+      <svg
+              class="mdc-select__dropdown-icon-graphic"
+              viewBox="7 10 10 5" focusable="false">
+        <polygon
+                class="mdc-select__dropdown-icon-inactive"
+                stroke="none"
+                fill-rule="evenodd"
+                points="7 10 12 15 17 10">
+        </polygon>
+        <polygon
+                class="mdc-select__dropdown-icon-active"
+                stroke="none"
+                fill-rule="evenodd"
+                points="7 15 12 10 17 15">
+        </polygon>
+      </svg>
+    </span>
+                <span class="mdc-line-ripple"></span>
+            </div>
+
+            <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
+                <ul class="mdc-list" role="listbox">
+                    <li class="mdc-list-item mdc-list-item--selected" data-value="include" role="option">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">포함</span>
+                    </li>
+                    <li class="mdc-list-item" data-value="same" role="option">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">일치</span>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
-<div class="mdc-text-field mdc-text-field--with-trailing-icon
+    <div class="mdc-text-field mdc-text-field--with-trailing-icon
  mdc-text-field--filled mdc-elevation--z4" id="type_search_box">
-    <input class="mdc-text-field__input" id="type_search_box_input">
-    <div class="mdc-line-ripple"></div>
-    <label class="mdc-floating-label text_floating_labels_main_color" for="type_search_box_input">검색</label>
-    <button class="material-icons mdc-text-field__icon mdc-text-field__icon--trailing mdc-icon-button"
-            role="button" tabindex="0" id="type_search_icon">search
-    </button>
-</div>
+        <input class="mdc-text-field__input" id="type_search_box_input">
+        <div class="mdc-line-ripple"></div>
+        <label class="mdc-floating-label text_floating_labels_main_color" for="type_search_box_input">검색</label>
+        <button class="material-icons mdc-text-field__icon mdc-text-field__icon--trailing mdc-icon-button"
+                role="button" tabindex="0" id="type_search_icon">search
+        </button>
+    </div>
     <br>
     <div id="type_search_result"></div>
 </div>

@@ -7,8 +7,13 @@ router.get('/type', function (req, res, next) {
 })
 
 router.post('/type/:type/:attr', function (req, res, next) {
+    let value
+    if (req.body.option === "same")
+        value = req.body.text
+    else
+        value = "%" + req.body.text + "%"
     mysql.query(`SELECT * from ${req.params.type} where ${req.params.attr} LIKE ?`,
-        ["%" + req.body.text + "%"],
+        [value],
         function (error, results) {
             console.log(error)
             return res.send({error: error, body: results})
