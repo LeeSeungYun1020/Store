@@ -60,7 +60,6 @@ module.exports = function (upload) {
     })
 
     router.post('/file', upload.single("file"), function (req, res, next) {
-        //processLineByLine(req.file.path);
         fs.readFile(req.file.path, function (err, data) {
             if (err) {
                 res.render('alert.ejs',

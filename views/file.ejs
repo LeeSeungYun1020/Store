@@ -19,12 +19,11 @@
 
     <style>
         form {
-            min-height: 200px;
+            min-height: 300px;
             background: white;
         }
 
         .dropzone {
-            border: 2px solid rgba(0, 0, 0, 0.3);
             margin: 16px;
             box-sizing: border-box;
             padding: 54px;
@@ -53,11 +52,13 @@
                 // }
             },
             complete: function () {
-                //alert("업로드 완료")
+                alert("파일 업로드 완료")
+                location.href = "/input/file"
             }
         }
         $(document).ready(() => {
             tabBar.activateTab(2)
+            $(".dz-button").text("파일을 드래그하거나 눌러서 업로드")
         })
     </script>
 </head>
@@ -129,7 +130,7 @@
     </div>
 </header>
 <div>
-    <form class="dropzone" action="/input/file" id="csvDropzone" method="post" enctype="text/plain">
+    <form class="dropzone mdc-elevation--z4" action="/input/file" id="csvDropzone" method="post" enctype="text/plain">
         <input type="file" name="file" style="visibility: hidden"/>
     </form>
 </div>
