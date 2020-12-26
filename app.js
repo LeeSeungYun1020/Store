@@ -6,21 +6,32 @@ const bodyParser = require('body-parser')
 const logger = require('morgan');
 const mysql = require('./lib/mysql.js')
 const fs = require('fs')
-
-const indexRouter = require('./routes/index');
-const inputRouter = require('./routes/input');
-const searchRouter = require('./routes/search');
-
+const multer = require("multer")
+const csvParser = require("csv-parse")
 const app = express();
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/tem/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname)
+  }
+})
+const upload = multer({storage: storage})
+const indexRouter = require('./routes/index');
+const inputRouter = require('./routes/input')(upload);
+const searchRouter = require('./routes/search');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile)
 
+
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())

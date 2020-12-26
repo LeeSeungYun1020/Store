@@ -41,15 +41,16 @@
     <script>
         Dropzone.options.csvDropzone = {
             paramName: "file",
-            maxFiles: 1,
+            //maxFiles: 1,
             acceptedFiles: ".csv,.txt",
-            accept: function(file, done) {
-                if (file.name == "data.csv") {
-                    alert("OK")
-                    done();
-                } else {
-                    done("Check your file.");
-                }
+            accept: function (file, done) {
+                done()
+                // if (file.name == "data.csv") {
+                //     alert("OK")
+                //     done();
+                // } else {
+                //     done("Check your file.");
+                // }
             },
             complete: function () {
                 //alert("업로드 완료")
@@ -130,10 +131,6 @@
 <div>
     <form class="dropzone" action="/input/file" id="csvDropzone" method="post" enctype="text/plain">
         <input type="file" name="file" style="visibility: hidden"/>
-    </form>
-    <form action="/input/file" method="post">
-        <input type="file" name="kFile">
-        <button type="submit">전송</button>
     </form>
 </div>
 <footer></footer>

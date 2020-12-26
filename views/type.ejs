@@ -29,8 +29,7 @@
         }
 
         #type_result_table {
-            min-width: 400px;
-            width: 60%;
+            min-width: 60%;
         }
 
     </style>
@@ -148,14 +147,14 @@
         <tr class="mdc-data-table__row">
           <th class="mdc-data-table__cell" scope="row">${value.transactionNumber}</th>
           <td class="mdc-data-table__cell mdc-data-table__cell--numeric">${value.productID}</td>
-          <td class="mdc-data-table__cell">${value.price}</td>
-          <td class="mdc-data-table__cell">${value.date}</td>
+          <td class="mdc-data-table__cell">$${value.price}</td>
+          <td class="mdc-data-table__cell">${value.date.split("T")[0]}</td>
           <td class="mdc-data-table__cell">${value.customerName}</td>
         </tr>
                                     `.trimEnd()
                                 }
                             } else if (type === "product") {
-                                    result += `
+                                result += `
                 <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">상품 ID</th>
                 <th class="mdc-data-table__header-cell" role="columnheader" scope="col">상품명</th>
                 <th class="mdc-data-table__header-cell" role="columnheader" scope="col">공급자</th>
