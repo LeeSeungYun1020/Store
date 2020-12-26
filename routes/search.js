@@ -25,10 +25,10 @@ router.post('/case/1', function (req, res, next) {
 
 router.post('/case/2', function (req, res, next) {
     mysql.query(`
-                select Product.*
-                from Trade, Product
-                where Product.productID = Trade.productID and date(date) < date(?)
-                group by Product.productID
+                select product.*
+                from trade, product
+                where product.productID = trade.productID and date(date) < date(?)
+                group by product.productID
                 order by sum(price) desc
                 limit ${req.body.count}`.trim(),
         [req.body.date],
@@ -40,9 +40,9 @@ router.post('/case/2', function (req, res, next) {
 
 router.post('/case/3', function (req, res, next) {
     mysql.query(`
-                select Customer.name
-                from Customer, Trade, Product
-                where Customer.name = Trade.customerName and Trade.productID = Product.productID
+                select customer.name
+                from customer, trade, product
+                where customer.name = trade.customerName and trade.productID = product.productID
                 group by customerName
                 having count(transactionNumber) >= ?`.trim(),
         [req.body.count],
