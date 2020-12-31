@@ -7,20 +7,14 @@
 
 1. 고객, 거래, 상품 데이터 개별 입력
 2. 여러 개의 데이터 파일(CSV)로부터 입력
-    -
-        1. 고객: C, name(key), phone, address, gender
-    -
-        2. 거래: T, transactionNnumber(key), productID, price, date, customerName
-    -
-        3. 상품: P, name, productID(key), supplierName
+   1. 고객: C, name(key), phone, address, gender
+   2. 거래: T, transactionNnumber(key), productID, price, date, customerName
+   3. 상품: P, name, productID(key), supplierName
 3. 데이터 속성 기반 검색
 4. 특별한 검색 조건 지원
-    -
-        1. 남자보다 여자가 많이 산 상품의 이름
-    -
-        2. 주어진 날 이전에 가장 많은 거래(금액기준)가 이루어진 k 가지 상품
-    -
-        3. 하나의 supplier에서 m 번 이상의 제품을 산 고객의 이름
+   1. 남자보다 여자가 많이 산 상품의 이름
+   2. 주어진 날 이전에 가장 많은 거래(금액기준)가 이루어진 k 가지 상품
+   3. 하나의 supplier에서 m 번 이상의 제품을 산 고객의 이름
 
 ## 작동 화면
 
@@ -62,7 +56,7 @@ INSERT INTO product (productID, name, supplierName) VALUE (?, ?, ?);
 SELECT * from ${req.params.type} where ${req.params.attr} LIKE ?
 ```
 
-### case1
+#### case1
 
 ```mysql
 select product.name
