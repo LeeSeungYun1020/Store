@@ -101,3 +101,12 @@ where customer.name = trade.customerName and trade.productID = product.productID
 group by customerName
 having count(transactionNumber) >= ?
 ```
+
+## 서버
+
+Microsoft Azure를 이용하여 Linux 가상 머신을 만들어 서버를 구성하였다.  
+![서버](./img/azure.png)
+![서버](./img/server.png)
+
+pm2를 사용하여 서버가 계속 작동하도록 하였다.  
+![서버](./img/server2.png)
